@@ -1,0 +1,14 @@
+language: java
+
+jdk:
+- oraclejdk8
+
+script:
+- "./gradlew test testIntegration"
+
+notifications:
+  email:
+    recipients:
+    - secure: OAS+81QEM1DLfNPVgONM/SQMwlfFjEDrXuvcwLwOmVIwfN+w9FdDYt9tM/6PYscSQS4ywIDts4N3R6d/xWKuOVSE2EB2+ciOhXlW3BmYQ6Ca1li46xHHIkvL0ZzRoFC8ptnDmSktxnDwQ8Lj3ca+ToDw1L7a7pstBr9GCG8Muy84osSbP4XLb6Dfd6QimLJB8j7fRXev6LRQtxCrauKaUVPBAEkrcZ8tDNmXIdr35uk2hpiuXH15J4Snn5e+FtUpqiqnxcEsHvYeYJ0G6FqAVdXI/34zhpSiDSaKWd/hH3WkhLjY68HgKCqRktdUZCjqXS71sNt8nDJUxviGz57795iAIahLeNigU+2ELnt97CPykpK1BuAGR+W7S0X64aSx8h8TwTNKpomRw5meqCUtZzEMELQba/+6sKRUIVd37TpWUMQmRkVwwUsgfLXDldcfJ96ndHVatoGRO+r/cyZvgUI4V6QTCJ1yphrfBz6Aqz3pa7ynSMm4RuaRCQzmf+TFP20x9z3wg+JPnd8Uehs5kbGBBnBmD4Brhd/JZ+UOyB0xCO/1RqwHx5FaHpGLd47yBoXMMkQHL2nV5QE+o580RnxlrL+ZFg3hF/3xsjQ/wwSO/weReReoOPrXfkiKHoIzrkmCOtEFXMnLZ71zIdOh5Qwgd/ITS37oDMCr1VrcXxQ=
+    on_success: change
+    on_failure: always
