@@ -1,5 +1,10 @@
 Feature: Retro Box API manage boar items
 
+  Scenario: Create a new item
+    Given app has started
+    When user sends a new "HAPPY" post with content "message"
+    Then status code 201 returned
+
   Scenario: Find board items
     Given app has started
     When item for the default board are requested

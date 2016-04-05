@@ -19,10 +19,15 @@ When(~'^item for the default board are requested$') { ->
     StoryContext.putInContext(RESPONSE, response)
 }
 
+When(~'^user sends a new "([^"]*)" post with content "([^"]*)"$') { String type, String message ->
+    def response = givenApiClient().contentType(JSON).body(['type': type, 'message': message]).post('/items')
+    StoryContext.putInContext(RESPONSE, response)
+}
+
 Then(~'^items are$') { DataTable items ->
     def response = StoryContext.getFromContext(RESPONSE).as(List)
 
-    items.asMaps(String,String).each { row ->
+    items.asMaps(String, String).each { row ->
         def result = Eval.me('items', response, "${row.property}").toString()
         def fieldValue = row.value ?: null
 

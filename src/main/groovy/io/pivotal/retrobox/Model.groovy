@@ -3,6 +3,7 @@ package io.pivotal.retrobox
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
+import org.hibernate.validator.constraints.NotEmpty
 
 import javax.persistence.AttributeConverter
 import javax.persistence.Column
@@ -12,6 +13,7 @@ import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.validation.constraints.NotNull
 import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -27,6 +29,12 @@ enum ItemType {
     HAPPY, SAD, MEDIOCRE
 }
 
+
+class Board {
+    public static final int BOARD_ID = 1
+}
+
+
 @Entity
 @ToString
 @EqualsAndHashCode
@@ -40,6 +48,8 @@ class Item {
     @Column(name = 'BOARD_ID')
     Long boardId
 
+    @NotEmpty
+    @NotNull
     @Column(name = 'MESSAGE', nullable = false)
     String message
 
@@ -47,6 +57,7 @@ class Item {
     @Column(name = 'STATUS', nullable = false)
     ItemStatus status
 
+    @NotNull
     @Enumerated(STRING)
     @Column(name = 'TYPE', nullable = false)
     ItemType type
@@ -62,17 +73,19 @@ class Item {
 }
 
 @Converter(autoApply = true)
-public class ZonedDateTimeConverter implements AttributeConverter<ZonedDateTime, java.sql.Timestamp> {
-
+class ZonedDateTimeConverter implements AttributeConverter<ZonedDateTime, java.sql.Timestamp> {
     @Override
     public java.sql.Timestamp convertToDatabaseColumn(ZonedDateTime entityValue) {
-        return Timestamp.from(entityValue.toInstant());
+        return entityValue != null ? Timestamp.from(entityValue.toInstant()) : null
     }
 
     @Override
     public ZonedDateTime convertToEntityAttribute(java.sql.Timestamp databaseValue) {
-        LocalDateTime localDateTime = databaseValue.toLocalDateTime();
+        if(!databaseValue){
+            return null
+        }
+
+        LocalDateTime localDateTime = databaseValue.toLocalDateTime()
         return localDateTime.atZone(ZoneOffset.UTC);
     }
-
 }
