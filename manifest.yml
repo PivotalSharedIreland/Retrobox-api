@@ -1,0 +1,4 @@
+---
+applications:
+- name: retrobox-api
+  path: ./build/libs/retrobox-api-0.0.1-SNAPSHOT.jar
