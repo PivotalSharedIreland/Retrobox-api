@@ -102,7 +102,7 @@ task startServer(dependsOn: ['assemble']) << {
     Thread.sleep(10000);
 
     Thread.start {
-        def command = "java -Xms1024M -Xmx3072M -XX:PermSize=512m -XX:MaxPermSize=1024m -Dspring.profiles.active=mock -Dserver.port=9080 -jar build/libs/${project.name}-${jar.version}.jar"
+        def command = "java -Xms1024M -Xmx3072M -XX:PermSize=512m -XX:MaxPermSize=1024m -Dspring.profiles.active=mock -Dserver.port=9080 -jar build/libs/${jar.baseName}-${jar.version}.jar"
         println "Executing: ${command}"
         def process = "$command".execute();
         serverProcess = process
