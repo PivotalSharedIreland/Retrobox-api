@@ -16,7 +16,7 @@ this.metaClass.mixin(Hooks)
 this.metaClass.mixin(EN)
 
 When(~'^item for the default board are requested$') { ->
-    def response = givenApiClient().contentType(JSON).get('/board/1/items')
+    def response = givenApiClient().contentType(JSON).get('/board/1')
     StoryContext.putInContext(RESPONSE, response)
 }
 

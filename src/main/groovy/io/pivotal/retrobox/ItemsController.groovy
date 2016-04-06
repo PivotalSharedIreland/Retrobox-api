@@ -21,7 +21,7 @@ class ItemsController {
     @Autowired
     ItemService itemService
 
-    @RequestMapping(value = "/board/{board_id}/items", method = GET)
+    @RequestMapping(value = "/board/{board_id}", method = GET)
     @ResponseBody
     Board findBoardItems(@PathVariable(value = "board_id") String boardId) {
         new Board(items: itemService.findItems(BOARD_ID))

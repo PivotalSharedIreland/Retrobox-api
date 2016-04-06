@@ -31,7 +31,7 @@ class ItemsControllerSpec extends Specification {
 
     def "return a list of items"() {
         when:
-        def response = mockMvc.perform(get("/board/1/items").accept(APPLICATION_JSON))
+        def response = mockMvc.perform(get("/board/1").accept(APPLICATION_JSON))
 
         then:
         1 * itemsController.itemService.findItems(1) >> {
