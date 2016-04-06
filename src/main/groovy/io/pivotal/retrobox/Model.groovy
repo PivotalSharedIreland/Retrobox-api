@@ -62,9 +62,11 @@ class Item {
     @Column(name = 'TYPE', nullable = false)
     ItemType type
 
+    @JsonProperty('creation_date')
     @Column(name = 'CREATION_DATE', nullable = false)
     ZonedDateTime creationDate
 
+    @JsonProperty('last_modified_date')
     @Column(name = 'LAST_MODIFIED_DATE', nullable = false)
     ZonedDateTime lastModifiedDate
 
