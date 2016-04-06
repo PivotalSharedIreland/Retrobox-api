@@ -7,7 +7,7 @@
 
 pairs:
   fm: Fabio Mangione
-
+  sh: Shane Huston
 email:
   prefix: pair
   domain: pivotal.io
