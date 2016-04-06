@@ -48,6 +48,8 @@ class ItemsControllerSpec extends Specification {
                 .andExpect(jsonPath('$[0].status', CoreMatchers.is("ACTIVE")))
                 .andExpect(jsonPath('$[0].type', CoreMatchers.is("HAPPY")))
                 .andExpect(jsonPath('$[0].likes', CoreMatchers.is(0)))
+                .andExpect(jsonPath('$[0].creationDate', CoreMatchers.notNullValue()))
+                .andExpect(jsonPath('$[0].lastModifiedDate', CoreMatchers.notNullValue()))
     }
 
     def "save new item"() {
