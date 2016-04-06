@@ -32,6 +32,9 @@ enum ItemType {
 
 class Board {
     public static final int BOARD_ID = 1
+
+    @JsonProperty('items')
+    Item[] items
 }
 
 

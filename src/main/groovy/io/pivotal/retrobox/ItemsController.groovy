@@ -23,8 +23,8 @@ class ItemsController {
 
     @RequestMapping(value = "/board/{board_id}/items", method = GET)
     @ResponseBody
-    Item[] findBoardItems(@PathVariable(value = "board_id") String boardId) {
-        itemService.findItems(BOARD_ID)
+    Board findBoardItems(@PathVariable(value = "board_id") String boardId) {
+        new Board(items: itemService.findItems(BOARD_ID))
     }
 
     @RequestMapping(value = "/items", method = POST)

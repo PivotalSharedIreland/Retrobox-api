@@ -1,5 +1,6 @@
 package io.pivotal.retrobox.acceptance.steps.items
 
+import io.pivotal.retrobox.Board
 import io.pivotal.retrobox.acceptance.steps.common.StoryContext
 import cucumber.api.DataTable
 import cucumber.api.groovy.EN
@@ -25,10 +26,11 @@ When(~'^user sends a new "([^"]*)" post with content "([^"]*)"$') { String type,
 }
 
 Then(~'^items are$') { DataTable items ->
-    def response = StoryContext.getFromContext(RESPONSE).as(List)
+    def response = StoryContext.getFromContext(RESPONSE).as(Board)
+    def responseItems = response.items
 
     items.asMaps(String, String).each { row ->
-        def result = Eval.me('items', response, "${row.property}").toString()
+        def result = Eval.me('items', responseItems, "${row.property}").toString()
         def fieldValue = row.value ?: null
 
         assertThat("${row.field}", result, CoreMatchers.is(fieldValue))
