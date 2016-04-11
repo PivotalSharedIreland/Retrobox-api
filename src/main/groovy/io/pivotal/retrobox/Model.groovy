@@ -26,7 +26,7 @@ enum ItemStatus {
 }
 
 enum ItemType {
-    HAPPY, SAD, MEDIOCRE
+    HAPPY, UNHAPPY, MEDIOCRE
 }
 
 

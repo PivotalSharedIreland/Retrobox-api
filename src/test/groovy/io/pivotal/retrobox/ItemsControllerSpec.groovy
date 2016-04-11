@@ -10,7 +10,8 @@ import spock.lang.Specification
 import static io.pivotal.retrobox.Board.BOARD_ID
 import static io.pivotal.retrobox.ItemStatus.ACTIVE
 import static io.pivotal.retrobox.ItemType.HAPPY
-import static io.pivotal.retrobox.ItemType.SAD
+import static io.pivotal.retrobox.ItemType.MEDIOCRE
+import static io.pivotal.retrobox.ItemType.UNHAPPY
 import static java.time.ZonedDateTime.now
 import static java.time.ZoneOffset.UTC
 import static org.springframework.http.MediaType.APPLICATION_JSON
@@ -38,7 +39,7 @@ class ItemsControllerSpec extends Specification {
             [
                     new Item(id: 83838389, boardId: BOARD_ID, type: HAPPY, message: 'I\'m a message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 0),
                     new Item(id: 83838388, boardId: BOARD_ID, type: HAPPY, message: 'I\'m another message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 3),
-                    new Item(id: 83838387, boardId: BOARD_ID, type: SAD, message: 'I\'m a different message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 1),
+                    new Item(id: 83838387, boardId: BOARD_ID, type: UNHAPPY, message: 'I\'m a different message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 1),
             ]
         }
         response.andExpect(status().isOk())
@@ -54,7 +55,7 @@ class ItemsControllerSpec extends Specification {
 
     def "save new item"() {
         given:
-        def item = new Item(type: HAPPY, message: 'text')
+        def item = new Item(type: type, message: message)
 
         when:
         def response = mockMvc.perform(post("/items").contentType(APPLICATION_JSON).content(new ObjectMapper().writeValueAsBytes(item)))
@@ -66,6 +67,12 @@ class ItemsControllerSpec extends Specification {
             return new Item()
         }
         response.andExpect(status().isCreated())
+
+        where:
+        type     | message
+        HAPPY    | 'happy text'
+        MEDIOCRE | 'mediocre text'
+        UNHAPPY  | 'sad text'
     }
 
     def "return bad request if item to be saved is wrong"() {
@@ -76,8 +83,8 @@ class ItemsControllerSpec extends Specification {
         response.andExpect(status().isBadRequest())
 
         where:
-        item                                   | _
-        new Item(boardId: BOARD_ID, type: HAPPY)      | _
-        new Item(boardId: BOARD_ID, message: 'text')  | _
+        item                                         | _
+        new Item(boardId: BOARD_ID, type: HAPPY)     | _
+        new Item(boardId: BOARD_ID, message: 'text') | _
     }
 }

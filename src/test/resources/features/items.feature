@@ -20,7 +20,7 @@ Feature: Retro Box API manage boar items
       | items[0].boardId          | 1                       |
       | items[2].message          | I'm a different message |
       | items[2].status           | ACTIVE                  |
-      | items[2].type             | SAD                     |
+      | items[2].type             | UNHAPPY                 |
       | items[2].creationDate     | 2016-01-01T21:32Z[GMT]  |
       | items[2].lastModifiedDate | 2016-01-01T21:32Z[GMT]  |
       | items[2].likes            | 1                       |

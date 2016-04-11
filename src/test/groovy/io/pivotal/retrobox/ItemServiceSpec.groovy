@@ -5,7 +5,7 @@ import spock.lang.Specification
 import static io.pivotal.retrobox.Board.BOARD_ID
 import static io.pivotal.retrobox.ItemStatus.ACTIVE
 import static io.pivotal.retrobox.ItemType.HAPPY
-import static io.pivotal.retrobox.ItemType.SAD
+import static io.pivotal.retrobox.ItemType.UNHAPPY
 import static java.time.ZonedDateTime.now
 import static java.time.ZoneOffset.UTC
 
@@ -26,7 +26,7 @@ class ItemServiceSpec extends Specification {
             [
                     new Item(id: 83838389, boardId: BOARD_ID, type: HAPPY, message: 'I\'m a message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 0),
                     new Item(id: 83838388, boardId: 1, type: HAPPY, message: 'I\'m another message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 3),
-                    new Item(id: 83838387, boardId: 1, type: SAD, message: 'I\'m a different message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 1),
+                    new Item(id: 83838387, boardId: 1, type: UNHAPPY, message: 'I\'m a different message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 1),
             ]
         }
 

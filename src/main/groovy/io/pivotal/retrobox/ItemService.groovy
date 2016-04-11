@@ -21,6 +21,6 @@ class ItemService {
 
     Item addItem(Item item) {
         def now = ZonedDateTime.now(UTC)
-        itemRepository.save(new Item(boardId: item.boardId, message: item.message, type: HAPPY, status: ACTIVE, creationDate: now, lastModifiedDate: now))
+        itemRepository.save(new Item(boardId: item.boardId, message: item.message, type: item.type, status: ACTIVE, creationDate: now, lastModifiedDate: now))
     }
 }
