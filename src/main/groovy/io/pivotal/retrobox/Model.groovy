@@ -31,7 +31,7 @@ enum ItemType {
 
 
 class Board {
-    public static final int BOARD_ID = 1
+    public static final long BOARD_ID = 1L
 
     @JsonProperty('items')
     Item[] items

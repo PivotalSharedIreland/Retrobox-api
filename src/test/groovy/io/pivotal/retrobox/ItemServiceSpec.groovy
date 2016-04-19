@@ -2,8 +2,11 @@ package io.pivotal.retrobox
 
 import spock.lang.Specification
 
+import java.time.ZonedDateTime
+
 import static io.pivotal.retrobox.Board.BOARD_ID
 import static io.pivotal.retrobox.ItemStatus.ACTIVE
+import static io.pivotal.retrobox.ItemStatus.ARCHIVED
 import static io.pivotal.retrobox.ItemType.HAPPY
 import static io.pivotal.retrobox.ItemType.UNHAPPY
 import static java.time.ZonedDateTime.now
@@ -19,7 +22,7 @@ class ItemServiceSpec extends Specification {
 
     def "return a list of items"() {
         when:
-        def items = itemService.findItems(1)
+        def items = itemService.findItemsByBoardId(1)
 
         then:
         1 * itemService.itemRepository.findByBoardId(1) >> {
@@ -57,5 +60,47 @@ class ItemServiceSpec extends Specification {
             new Item(boardId: i.boardId, message: i.message, type: HAPPY, status: ACTIVE)
         }
         newItem != null
+    }
+
+    def "update an existing item"() {
+        given:
+        def now = ZonedDateTime.now()
+        def creationDate = now.minusDays(1)
+        def item = new Item(id: 1, message: 'text', type: HAPPY, boardId: BOARD_ID, status: ARCHIVED)
+
+        when:
+        def newItem = itemService.updateItem(item)
+
+        then:
+        1 * itemService.itemRepository.findOne(item.id) >> {
+            new Item(id: item.id, message: 'message', type: UNHAPPY, boardId: BOARD_ID, status: ACTIVE, creationDate: creationDate, lastModifiedDate: now)
+        }
+        1 * itemService.itemRepository.save(_ as Item) >> { Item i ->
+            assert i.boardId == BOARD_ID
+            assert i.message == item.message
+            assert i.type == item.type
+            assert i.status == item.status
+            assert i.likes == item.likes
+            assert i.creationDate == creationDate
+            assert i.lastModifiedDate.isAfter(now)
+
+            new Item(boardId: i.boardId, message: i.message, type: i.type, status: i.status)
+        }
+        newItem != null
+    }
+
+    def "throws ItemNotFoundException when trying to update an item which does not exist"() {
+        given:
+        def item = new Item(id: 1, message: 'text', type: HAPPY, boardId: BOARD_ID, status: ARCHIVED)
+
+        when:
+        itemService.updateItem(item)
+
+        then:
+        1 * itemService.itemRepository.findOne(item.id) >> {
+            null
+        }
+
+        thrown(ItemNotFoundException)
     }
 }

@@ -9,6 +9,7 @@ import spock.lang.Specification
 
 import static io.pivotal.retrobox.Board.BOARD_ID
 import static io.pivotal.retrobox.ItemStatus.ACTIVE
+import static io.pivotal.retrobox.ItemStatus.ARCHIVED
 import static io.pivotal.retrobox.ItemType.HAPPY
 import static io.pivotal.retrobox.ItemType.MEDIOCRE
 import static io.pivotal.retrobox.ItemType.UNHAPPY
@@ -17,6 +18,7 @@ import static java.time.ZoneOffset.UTC
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -35,7 +37,7 @@ class ItemsControllerSpec extends Specification {
         def response = mockMvc.perform(get("/board/1").accept(APPLICATION_JSON))
 
         then:
-        1 * itemsController.itemService.findItems(1) >> {
+        1 * itemsController.itemService.findItemsByBoardId(1) >> {
             [
                     new Item(id: 83838389, boardId: BOARD_ID, type: HAPPY, message: 'I\'m a message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 0),
                     new Item(id: 83838388, boardId: BOARD_ID, type: HAPPY, message: 'I\'m another message', status: ACTIVE, creationDate: now(UTC), lastModifiedDate: now(UTC), likes: 3),
@@ -86,5 +88,45 @@ class ItemsControllerSpec extends Specification {
         item                                         | _
         new Item(boardId: BOARD_ID, type: HAPPY)     | _
         new Item(boardId: BOARD_ID, message: 'text') | _
+    }
+
+    def "update an existing item"() {
+        given:
+        def item = new Item(id: 1, type: HAPPY, message: "Test", status: ARCHIVED)
+
+        when:
+        def response = mockMvc.perform(put("/items/${item.id}").contentType(APPLICATION_JSON).content(new ObjectMapper().writeValueAsBytes(item)))
+
+        then:
+        1 * itemsController.itemService.updateItem(_ as Item) >> { Item i ->
+            assert i == item
+        }
+        response.andExpect(status().isOk())
+    }
+
+    def "return bad request if the id in the URL does not match the item id"() {
+        given:
+        def item = new Item(id: 1, type: HAPPY, message: "Test", status: ARCHIVED)
+
+        when:
+        def response = mockMvc.perform(put("/items/2").contentType(APPLICATION_JSON).content(new ObjectMapper().writeValueAsBytes(item)))
+
+        then:
+        0 * itemsController.itemService._
+        response.andExpect(status().isBadRequest())
+    }
+
+    def "return not found if the item does not exist"() {
+        given:
+        def item = new Item(id: 1, type: HAPPY, message: "Test", status: ARCHIVED)
+
+        when:
+        def response = mockMvc.perform(put("/items/${item.id}").contentType(APPLICATION_JSON).content(new ObjectMapper().writeValueAsBytes(item)))
+
+        then:
+        1 * itemsController.itemService.updateItem(_ as Item) >> {
+            throw new ItemNotFoundException('Item does not exist')
+        }
+        response.andExpect(status().isNotFound())
     }
 }
