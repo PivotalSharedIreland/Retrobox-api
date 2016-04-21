@@ -3,6 +3,7 @@ package io.pivotal.retrobox
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
+import javax.transaction.Transactional
 import java.time.ZonedDateTime
 
 import static io.pivotal.retrobox.ItemStatus.ACTIVE
@@ -34,5 +35,10 @@ class ItemService {
         item.lastModifiedDate = ZonedDateTime.now(UTC)
 
         itemRepository.save(item)
+    }
+
+    @Transactional
+    int incrementLikes(Long itemId) {
+        itemRepository.incrementLikes(itemId)
     }
 }

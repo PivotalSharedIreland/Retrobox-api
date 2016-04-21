@@ -129,4 +129,15 @@ class ItemsControllerSpec extends Specification {
         }
         response.andExpect(status().isNotFound())
     }
+
+    def "like an existing item"() {
+        when:
+        def response = mockMvc.perform(post("/items/1/like").contentType(APPLICATION_JSON))
+
+        then:
+        1 * itemsController.itemService.incrementLikes(1) >> {
+            1
+        }
+        response.andExpect(status().isOk())
+    }
 }

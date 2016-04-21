@@ -51,6 +51,13 @@ class ItemsController {
         ResponseEntity.ok().build()
     }
 
+    @RequestMapping(value = "/items/{id}/like", method = POST)
+    @ResponseStatus(OK)
+    @ResponseBody
+    void likeItem(@PathVariable() Long id) {
+        itemService.incrementLikes(id)
+    }
+
     @ExceptionHandler(ItemNotFoundException)
     @ResponseStatus(NOT_FOUND)
     void handleItemNotFoundException(){}

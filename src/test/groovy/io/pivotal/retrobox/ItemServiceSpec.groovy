@@ -103,4 +103,15 @@ class ItemServiceSpec extends Specification {
 
         thrown(ItemNotFoundException)
     }
+
+    def "increment likes"() {
+        when:
+        def updatedRows = itemService.incrementLikes(1)
+
+        then:
+        1 * itemService.itemRepository.incrementLikes(1) >> {
+            1
+        }
+        updatedRows == 1
+    }
 }

@@ -51,3 +51,14 @@ Feature: Retro Box API manage boar items
       | items[0].creationDate     | 2016-01-01T20:30Z[GMT] |
       | items[0].likes            | 0                      |
       | items[0].boardId          | 1                      |
+
+  Scenario: Like an existing board item
+    Given app has started
+    When a user likes the item with id "3"
+    Then status code 200 returned
+    When item for the default board are requested
+    Then status code 200 returned
+    And items are
+      | property                  | value                  |
+      | items[2].id               | 3                      |
+      | items[2].likes            | 2                      |

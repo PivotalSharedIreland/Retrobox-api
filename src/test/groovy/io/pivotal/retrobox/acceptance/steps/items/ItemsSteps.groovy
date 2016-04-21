@@ -51,3 +51,8 @@ When(~/^user updates item with id "([^"]*)" and new status "([^"]*)"$/) { String
     def response = givenApiClient().contentType(JSON).body(item).put("/items/${itemId}" )
     putInContext(RESPONSE, response)
 }
+
+When(~/^a user likes the item with id "([^"]*)"$/) { String itemId ->
+    def response = givenApiClient().contentType(JSON).post("/items/${itemId}/like" )
+    putInContext(RESPONSE, response)
+}
