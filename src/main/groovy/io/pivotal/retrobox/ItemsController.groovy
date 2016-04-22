@@ -15,7 +15,9 @@ import javax.validation.Valid
 import static io.pivotal.retrobox.Board.BOARD_ID
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.NO_CONTENT
 import static org.springframework.http.HttpStatus.OK
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE
 import static org.springframework.web.bind.annotation.RequestMethod.GET
 import static org.springframework.web.bind.annotation.RequestMethod.POST
 import static org.springframework.web.bind.annotation.RequestMethod.PUT
@@ -53,9 +55,14 @@ class ItemsController {
 
     @RequestMapping(value = "/items/{id}/like", method = POST)
     @ResponseStatus(OK)
-    @ResponseBody
     void likeItem(@PathVariable() Long id) {
         itemService.incrementLikes(id)
+    }
+
+    @RequestMapping(value = "/items/{id}", method = DELETE)
+    @ResponseStatus(NO_CONTENT)
+    void deleteItem(@PathVariable() Long id) {
+        itemService.deleteItem(id)
     }
 
     @ExceptionHandler(ItemNotFoundException)

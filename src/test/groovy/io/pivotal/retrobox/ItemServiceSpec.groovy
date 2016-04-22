@@ -114,4 +114,12 @@ class ItemServiceSpec extends Specification {
         }
         updatedRows == 1
     }
+
+    def "delete an item"() {
+        when:
+        itemService.deleteItem(1)
+
+        then:
+        1 * itemService.itemRepository.delete(1)
+    }
 }

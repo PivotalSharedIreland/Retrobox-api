@@ -41,4 +41,8 @@ class ItemService {
     int incrementLikes(Long itemId) {
         itemRepository.incrementLikes(itemId)
     }
+
+    void deleteItem(Long itemId) {
+        itemRepository.delete(itemId)
+    }
 }

@@ -56,3 +56,8 @@ When(~/^a user likes the item with id "([^"]*)"$/) { String itemId ->
     def response = givenApiClient().contentType(JSON).post("/items/${itemId}/like" )
     putInContext(RESPONSE, response)
 }
+
+When(~/^a user deletes the item with id "([^"]*)"$/) { String itemId ->
+    def response = givenApiClient().contentType(JSON).delete("/items/${itemId}" )
+    putInContext(RESPONSE, response)
+}

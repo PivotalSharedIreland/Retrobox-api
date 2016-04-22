@@ -16,6 +16,7 @@ import static io.pivotal.retrobox.ItemType.UNHAPPY
 import static java.time.ZonedDateTime.now
 import static java.time.ZoneOffset.UTC
 import static org.springframework.http.MediaType.APPLICATION_JSON
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
@@ -139,5 +140,14 @@ class ItemsControllerSpec extends Specification {
             1
         }
         response.andExpect(status().isOk())
+    }
+
+    def "delete an existing item"() {
+        when:
+        def response = mockMvc.perform(delete("/items/1").contentType(APPLICATION_JSON))
+
+        then:
+        1 * itemsController.itemService.deleteItem(1)
+        response.andExpect(status().isNoContent())
     }
 }

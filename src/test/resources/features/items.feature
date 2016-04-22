@@ -19,6 +19,7 @@ Feature: Retro Box API manage boar items
       | items[0].lastModifiedDate | 2016-01-01T20:30Z[GMT]  |
       | items[0].likes            | 0                       |
       | items[0].boardId          | 1                       |
+      | items[2].id               | 3                       |
       | items[2].message          | I'm a different message |
       | items[2].status           | ACTIVE                  |
       | items[2].type             | UNHAPPY                 |
@@ -26,7 +27,6 @@ Feature: Retro Box API manage boar items
       | items[2].lastModifiedDate | 2016-01-01T21:32Z[GMT]  |
       | items[2].likes            | 1                       |
       | items[2].boardId          | 1                       |
-      | items[2].id               | 3                       |
       | items[3].id               | 4                       |
       | items[3].message          | I'm a different message |
       | items[3].status           | ARCHIVED                |
@@ -62,3 +62,15 @@ Feature: Retro Box API manage boar items
       | property                  | value                  |
       | items[2].id               | 3                      |
       | items[2].likes            | 2                      |
+
+  Scenario: Delete an existing board item
+    Given app has started
+    When a user deletes the item with id "2"
+    Then status code 204 returned
+    When item for the default board are requested
+    Then status code 200 returned
+    And items are
+      | property                  | value                   |
+      | items[0].id               | 1                       |
+      | items[1].id               | 3                       |
+      | items[2].id               | 4                       |
