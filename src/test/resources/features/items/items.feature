@@ -1,4 +1,4 @@
-Feature: Retro Box API manage boar items
+Feature: Retro Box API manage board items
 
   Scenario: Create a new item
     Given app has started

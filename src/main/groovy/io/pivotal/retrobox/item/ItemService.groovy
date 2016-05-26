@@ -1,4 +1,4 @@
-package io.pivotal.retrobox
+package io.pivotal.retrobox.item
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 import javax.transaction.Transactional
 import java.time.ZonedDateTime
 
-import static io.pivotal.retrobox.ItemStatus.ACTIVE
+import static ItemStatus.ACTIVE
 import static java.time.ZoneOffset.UTC
 
 @Component

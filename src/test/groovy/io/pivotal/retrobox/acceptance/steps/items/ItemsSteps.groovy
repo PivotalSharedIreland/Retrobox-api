@@ -3,7 +3,7 @@ package io.pivotal.retrobox.acceptance.steps.items
 import cucumber.api.DataTable
 import cucumber.api.groovy.EN
 import cucumber.api.groovy.Hooks
-import io.pivotal.retrobox.Board
+import io.pivotal.retrobox.item.Board
 import org.hamcrest.CoreMatchers
 
 import static com.jayway.restassured.http.ContentType.JSON

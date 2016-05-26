@@ -1,16 +1,16 @@
-package io.pivotal.retrobox
+package io.pivotal.retrobox.item
 
 import spock.lang.Specification
 
 import java.time.ZonedDateTime
 
-import static io.pivotal.retrobox.Board.BOARD_ID
-import static io.pivotal.retrobox.ItemStatus.ACTIVE
-import static io.pivotal.retrobox.ItemStatus.ARCHIVED
-import static io.pivotal.retrobox.ItemType.HAPPY
-import static io.pivotal.retrobox.ItemType.UNHAPPY
-import static java.time.ZonedDateTime.now
+import static io.pivotal.retrobox.item.Board.BOARD_ID
+import static io.pivotal.retrobox.item.ItemStatus.ACTIVE
+import static io.pivotal.retrobox.item.ItemStatus.ARCHIVED
+import static io.pivotal.retrobox.item.ItemType.HAPPY
+import static io.pivotal.retrobox.item.ItemType.UNHAPPY
 import static java.time.ZoneOffset.UTC
+import static java.time.ZonedDateTime.now
 
 class ItemServiceSpec extends Specification {
 

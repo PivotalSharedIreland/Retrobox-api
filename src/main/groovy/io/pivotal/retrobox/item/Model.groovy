@@ -1,22 +1,12 @@
-package io.pivotal.retrobox
+package io.pivotal.retrobox.item
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import org.hibernate.validator.constraints.NotEmpty
 
-import javax.persistence.AttributeConverter
-import javax.persistence.Column
-import javax.persistence.Converter
-import javax.persistence.Entity
-import javax.persistence.Enumerated
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 import javax.validation.constraints.NotNull
-import java.sql.Timestamp
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
 import static javax.persistence.EnumType.STRING
@@ -75,22 +65,4 @@ class Item {
 
     @Column(name = 'LIKES')
     int likes
-}
-
-@Converter(autoApply = true)
-class ZonedDateTimeConverter implements AttributeConverter<ZonedDateTime, java.sql.Timestamp> {
-    @Override
-    public java.sql.Timestamp convertToDatabaseColumn(ZonedDateTime entityValue) {
-        return entityValue != null ? Timestamp.from(entityValue.toInstant()) : null
-    }
-
-    @Override
-    public ZonedDateTime convertToEntityAttribute(java.sql.Timestamp databaseValue) {
-        if(!databaseValue){
-            return null
-        }
-
-        LocalDateTime localDateTime = databaseValue.toLocalDateTime()
-        return localDateTime.atZone(ZoneOffset.UTC);
-    }
 }

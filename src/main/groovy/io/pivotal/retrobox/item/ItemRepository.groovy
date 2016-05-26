@@ -1,4 +1,4 @@
-package io.pivotal.retrobox
+package io.pivotal.retrobox.item
 
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query

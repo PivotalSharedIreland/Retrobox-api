@@ -1,4 +1,4 @@
-package io.pivotal.retrobox
+package io.pivotal.retrobox.item
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.hamcrest.CoreMatchers
@@ -7,19 +7,14 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import spock.lang.Specification
 
-import static io.pivotal.retrobox.Board.BOARD_ID
-import static io.pivotal.retrobox.ItemStatus.ACTIVE
-import static io.pivotal.retrobox.ItemStatus.ARCHIVED
-import static io.pivotal.retrobox.ItemType.HAPPY
-import static io.pivotal.retrobox.ItemType.MEDIOCRE
-import static io.pivotal.retrobox.ItemType.UNHAPPY
-import static java.time.ZonedDateTime.now
+import static io.pivotal.retrobox.item.Board.BOARD_ID
+import static io.pivotal.retrobox.item.ItemStatus.ACTIVE
+import static io.pivotal.retrobox.item.ItemStatus.ARCHIVED
+import static io.pivotal.retrobox.item.ItemType.*
 import static java.time.ZoneOffset.UTC
+import static java.time.ZonedDateTime.now
 import static org.springframework.http.MediaType.APPLICATION_JSON
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 

@@ -8,6 +8,8 @@
 pairs:
   fm: Fabio Mangione
   sh: Shane Huston
+  gp: Greg Patricio
+  dw: Deborah Wood
 email:
   prefix: pair
   domain: pivotal.io
