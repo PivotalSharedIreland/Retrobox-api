@@ -24,12 +24,10 @@ class Action {
     Long id
 
     @NotEmpty
-    @NotNull
     @Column(name = 'DESCRIPTION', nullable = false)
     String description
 
     @NotEmpty
-    @NotNull
     @Column(name = 'OWNER', nullable = false)
     String owner
 
@@ -39,7 +37,6 @@ class Action {
     @Column(name = 'LAST_MODIFIED_DATE', nullable = false)
     ZonedDateTime lastModifiedDate
 
-//    @NotEmpty
     @NotNull
     @Enumerated(STRING)
     @Column(name = 'STATUS', nullable = false)

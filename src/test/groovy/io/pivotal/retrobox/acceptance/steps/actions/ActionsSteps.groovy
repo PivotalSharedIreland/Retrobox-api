@@ -19,7 +19,7 @@ When(~'^User creates a new action with$') { DataTable actions ->
         def description = row.description ?: null
         def owner = row.owner ?: null
 
-        def action = new Action(description: description, owner: owner)
+        def action = new Action(description: description, owner: owner) //TODO don't use application model objects
         def response = givenApiClient().contentType(JSON).body(action).post("/actions")
         putInContext(StoryContext.Fields.RESPONSE,response) //Overrides RESPONSE on iteration (not suitable for several actions created)
     }

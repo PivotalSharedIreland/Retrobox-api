@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
+import javax.validation.Valid
+
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.web.bind.annotation.RequestMethod.POST
 
-@RestController('/actions')
+@RestController
+@RequestMapping(value = '/actions')
 class ActionsController {
 
     @Autowired
@@ -17,7 +20,7 @@ class ActionsController {
 
     @RequestMapping(method = POST)
     @ResponseStatus(CREATED)
-    public Action saveAction(@RequestBody Action action) {
+    public Action saveAction(@RequestBody @Valid Action action) {
        actionsService.save(action)
     }
 }
