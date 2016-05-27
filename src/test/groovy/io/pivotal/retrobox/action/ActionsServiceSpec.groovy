@@ -25,19 +25,23 @@ class ActionsServiceSpec extends Specification {
     def 'action is saved'() {
         given: 'an action'
         Action newAction = new Action(description: 'My description', owner: 'someGuy')
-        Action serviceUpdatedAction = new Action(description: 'My description', owner: 'someGuy', creationDate: ZonedDateTime.now(), lastModifiedDate: ZonedDateTime.now(), status: ActionStatus.NEW)
-        Action expectedAction = new Action(id:1L, description: 'My description', owner: 'someGuy', creationDate: ZonedDateTime.now(), lastModifiedDate: ZonedDateTime.now(), status: ActionStatus.NEW)
+        Action expectedAction = new Action(id: 1L, description: 'My description', owner: 'someGuy', creationDate: ZonedDateTime.now(), lastModifiedDate: ZonedDateTime.now(), status: ActionStatus.NEW)
 
         when: 'I save the action'
-        actionsRepository.save(serviceUpdatedAction) >> expectedAction
+        1 * actionsRepository.save(_) >> { arguments ->
+            Action serviceUpdatedAction = arguments[0]
+            assert serviceUpdatedAction.creationDate == ZonedDateTime.now()
+            assert serviceUpdatedAction.lastModifiedDate == ZonedDateTime.now()
+            expectedAction
+        }
 
         Action actualAction = actionsService.save(newAction)
 
         then: 'action is persisted with a unique id, dates and default status'
-        actualAction.creationDate == expectedAction.creationDate
-        actualAction.lastModifiedDate == expectedAction.lastModifiedDate
-        actualAction.status == expectedAction.status
-        actualAction.id == expectedAction.id
+        assert actualAction.creationDate == expectedAction.creationDate
+        assert actualAction.lastModifiedDate == expectedAction.lastModifiedDate
+        assert actualAction.status == expectedAction.status
+        assert actualAction.id == expectedAction.id
     }
 
 }
