@@ -23,6 +23,9 @@ class Action {
     @GeneratedValue(strategy=GenerationType.AUTO)
     Long id
 
+    @Column(name = 'BOARD_ID')
+    Long boardId
+
     @NotEmpty
     @Column(name = 'DESCRIPTION', nullable = false)
     String description

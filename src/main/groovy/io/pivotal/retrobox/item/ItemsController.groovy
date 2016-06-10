@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*
 
 import javax.validation.Valid
 
-import static Board.BOARD_ID
 import static org.springframework.http.HttpStatus.*
 import static org.springframework.web.bind.annotation.RequestMethod.*
 
@@ -16,10 +15,10 @@ class ItemsController {
     @Autowired
     ItemService itemService
 
-    @RequestMapping(value = "/board/{board_id}", method = GET)
+    @RequestMapping(value = "/items", method = GET)
     @ResponseBody
-    Board findBoardItems(@PathVariable(value = "board_id") String boardId) {
-        new Board(items: itemService.findItemsByBoardId(BOARD_ID))
+    Item[] listItems(@RequestParam Long boardId) {
+        itemService.findItemsByBoardId(boardId);
     }
 
     @RequestMapping(value = "/items", method = POST)

@@ -7,6 +7,9 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
+import static io.pivotal.retrobox.item.Board.BOARD_ID
+import static io.pivotal.retrobox.item.ItemType.HAPPY
+
 class ActionsServiceSpec extends Specification {
 
     ActionsRepository actionsRepository
@@ -42,6 +45,25 @@ class ActionsServiceSpec extends Specification {
         assert actualAction.lastModifiedDate == expectedAction.lastModifiedDate
         assert actualAction.status == expectedAction.status
         assert actualAction.id == expectedAction.id
+    }
+
+    def "return a list of actions"() {
+        when:
+        def actions = actionsService.findActionsByBoardId(1)
+
+        then:
+        1 * actionsService.actionsRepository.findByBoardId(1) >> {
+            [
+                    new Action(id: 1, boardId: 1L, description: "desc 1", owner: "guy1"),
+                    new Action(id: 2, boardId: 1L, description: "desc 2", owner: "guy2"),
+                    new Action(id: 3, boardId: 1L, description: "desc 3", owner: "guy3")
+            ]
+        }
+
+        actions.size() == 3
+        actions[0].boardId == BOARD_ID
+        actions[0].description == "desc 1"
+        actions[0].owner == "guy1"
     }
 
 }

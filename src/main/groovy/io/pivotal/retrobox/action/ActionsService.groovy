@@ -11,6 +11,10 @@ class ActionsService {
     @Autowired
     ActionsRepository actionsRepository
 
+    Action[] findActionsByBoardId(Long boardId) {
+        actionsRepository.findByBoardId(boardId)
+    }
+
     Action save(Action action) {
         setDates(action)
         actionsRepository.save(action)

@@ -30,7 +30,7 @@ class ItemsControllerSpec extends Specification {
 
     def "return a list of items"() {
         when:
-        def response = mockMvc.perform(get("/board/1").accept(APPLICATION_JSON))
+        def response = mockMvc.perform(get("/items?boardId=1").accept(APPLICATION_JSON))
 
         then:
         1 * itemsController.itemService.findItemsByBoardId(1) >> {
@@ -41,14 +41,15 @@ class ItemsControllerSpec extends Specification {
             ]
         }
         response.andExpect(status().isOk())
-                .andExpect(jsonPath('$.items', Matchers.hasSize(3)))
-                .andExpect(jsonPath('$.items[0].board_id', CoreMatchers.is(1)))
-                .andExpect(jsonPath('$.items[0].message', CoreMatchers.is("I'm a message")))
-                .andExpect(jsonPath('$.items[0].status', CoreMatchers.is("ACTIVE")))
-                .andExpect(jsonPath('$.items[0].type', CoreMatchers.is("HAPPY")))
-                .andExpect(jsonPath('$.items[0].likes', CoreMatchers.is(0)))
-                .andExpect(jsonPath('$.items[0].creation_date', CoreMatchers.notNullValue()))
-                .andExpect(jsonPath('$.items[0].last_modified_date', CoreMatchers.notNullValue()))
+                .andExpect(jsonPath('$', Matchers.hasSize(3)))
+                .andExpect(jsonPath('$.[0].board_id', CoreMatchers.is(1)))
+                .andExpect(jsonPath('$.[0].message', CoreMatchers.is("I'm a message")))
+                .andExpect(jsonPath('$.[0].status', CoreMatchers.is("ACTIVE")))
+                .andExpect(jsonPath('$.[0].type', CoreMatchers.is("HAPPY")))
+                .andExpect(jsonPath('$.[0].likes', CoreMatchers.is(0)))
+                .andExpect(jsonPath('$.[0].creation_date', CoreMatchers.notNullValue()))
+                .andExpect(jsonPath('$.[0].last_modified_date', CoreMatchers.notNullValue()))
+
     }
 
     def "save new item"() {
